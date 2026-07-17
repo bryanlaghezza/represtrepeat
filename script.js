@@ -144,15 +144,24 @@ document.addEventListener("visibilitychange", () => {
     }
 });
 
-
-// Fullscreen mode
+// Fullscreen
 const fullscreenBtn = document.getElementById("fullscreen");
 
-fullscreenBtn.addEventListener("click", async () => {
-    if (!document.fullscreenElement) {
-        await document.documentElement.requestFullscreen();
+fullscreenBtn.addEventListener("click", () => {
+    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        const elem = document.documentElement;
+
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+        }
     } else {
-        await document.exitFullscreen();
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        }
     }
 });
 
