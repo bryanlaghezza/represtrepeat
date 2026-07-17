@@ -122,3 +122,24 @@ function updateFavicon() {
 
 updateFavicon();
 setInterval(updateFavicon, 1000);
+
+// Screen Wake API
+let wakeLock = null;
+
+async function keepScreenAwake() {
+    if (!("wakeLock" in navigator)) return;
+
+    try {
+        wakeLock = await navigator.wakeLock.request("screen");
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+document.addEventListener("click", keepScreenAwake, { once: true });
+
+document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") {
+        keepScreenAwake();
+    }
+});
