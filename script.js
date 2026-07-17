@@ -53,7 +53,7 @@ function updateFavicon() {
   const center = size / 2;
   const radius = 30;
 
-  // Black gradient background
+  // Default
   const gradient = ctx.createRadialGradient(
     center, center, 5,
     center, center, radius
@@ -81,7 +81,7 @@ function updateFavicon() {
   const minutes = now.getMinutes();
   const seconds = now.getSeconds();
 
-  // Draw hands function
+  // Favicon
   function hand(angle, length, width, color) {
     ctx.beginPath();
     ctx.moveTo(center, center);
@@ -116,7 +116,7 @@ function updateFavicon() {
   ctx.fillStyle = "#fff";
   ctx.fill();
 
-  // Update favicon
+  // Update 
   favicon.href = canvas.toDataURL("image/png");
 }
 
@@ -142,4 +142,23 @@ document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "visible") {
         keepScreenAwake();
     }
+});
+
+
+// Fullscreen mode
+const fullscreenBtn = document.getElementById("fullscreen");
+
+fullscreenBtn.addEventListener("click", async () => {
+    if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
+    } else {
+        await document.exitFullscreen();
+    }
+});
+
+// Lightmode 
+const themeToggle = document.getElementById("button");
+
+themeToggle.addEventListener("click", () => {
+    document.body.id = document.body.id === "lightmode" ? "" : "lightmode";
 });
